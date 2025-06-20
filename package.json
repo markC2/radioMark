@@ -1,0 +1,23 @@
+{
+  "name": "radiomark",
+  "version": "1.0.0",
+  "description": "a site to livestream audio input from my record player on desk and turn it into a radio site with video from my camcorder",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/markC2/radioMark.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/markC2/radioMark/issues"
+  },
+  "homepage": "https://github.com/markC2/radioMark#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
