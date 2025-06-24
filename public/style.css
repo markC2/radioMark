@@ -3,3 +3,25 @@ body{
     background-size: cover;
     background-position: center;
 }
+
+.audiocontainer ul {
+    list-style: none;
+    list-style-type: none;
+}
+
+.audiocontainer ul li img{
+    float: right;
+}
+
+
+.audiocontainer{
+    background-color: black;
+    opacity: 85%;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    display: block;
+}
+
+
+

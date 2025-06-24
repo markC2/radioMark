@@ -1,5 +1,8 @@
 const express = require('express');
 const { spawn } = require('child_process');
+const { axios } = require('axios');
+const { qs } = require('qs');
+const { env } = require('process');
 
 const app = express();
 const PORT = 3000;
@@ -8,6 +11,20 @@ app.use(express.static('public'));
 
 let audioClients = [];
 
+
+async function getSpotifyAcessToken(){
+    const clientID = 'e2b7cb130ccd4792a238477a4a9f4703'
+    const clientSecret = process.env.clientSecret
+    const tokenResponse = await axios.post('https://accounts.spotify.com/api/token',
+        qs.stringify({ grant_type: 'client_credentials' }), {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic ' + Buffer.from(`${clientId}:${clientSecret}`).toString('base64'),
+          },
+        }
+      );
+      return tokenResponse.data.access_token;
+}
 
 app.get("/audio", (req, res) =>{
     res.setHeader('Content-type', 'audio/mpeg');
@@ -25,7 +42,37 @@ app.get("/audio", (req, res) =>{
 });
 
 
+app.get("/album-art", async (req,res) =>{
+    const { track, artist } = req.query
 
+    if (!track || !artist ){
+        return res.status(400).send({error: 'please provide track and artist '})
+    }
+
+    try{
+
+        const accessToken = await getSpotifyAcessToken();
+        const searchResponse = await axios.get(`https://api.spotify.com/v1/search`, {
+            headers: {
+                'Authorizaiton': 'Bearer ${accessToken}'
+        },
+        params: {
+            q: '${track} ${artist}',
+            type: 'track',
+            limit: 1,
+
+        },
+    });
+
+    const AlbumArtUrl = searchResponse.data.tracks.items[0]?.album.images[0]?.url;
+    
+    res.json({AlbumArtUrl});
+    }
+    catch (error){
+    res.status(500).send({error: 'Error retrieving album art'});
+    }
+
+});
 
 const ffmpeg = spawn('ffmpeg', [
     '-f', 'avFoundation',
@@ -60,6 +107,5 @@ ffmpeg.on('exit', () => {
   
 app.listen(PORT, () => {
     console.log(`🎧 Server running at http://localhost:${PORT}/audio`);
-    console.log(`📹 Video stream at http://localhost:${PORT}/video`);
     
 });
