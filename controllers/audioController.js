@@ -1,9 +1,9 @@
 //audioController
-const { addClient } = require('../services/FFMPEGService');
+const { addClient, killStream, startStream } = require('../services/FFMPEGService');
 
 
 
-const audioController = (req, res) => {
+const audioControllerRawMp3 = (req, res) => {
     res.setHeader('Content-type', 'audio/mpeg');
     res.setHeader('Transfer-encoding', 'chunked');
     res.setHeader('Connection', 'keep-alive');
@@ -13,5 +13,18 @@ const audioController = (req, res) => {
 
 };
 
+const HLSstreamHandler = (req,res) =>{
+    const route = req.path
 
-module.exports = audioController
+    if (route === '/stop-stream'){
+        killStream(res)
+    }
+    else if(route === '/start-stream'){
+        startStream(res)
+
+    }
+   
+}
+
+
+module.exports = {audioControllerRawMp3, HLSstreamHandler}
