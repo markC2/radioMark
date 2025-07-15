@@ -26,7 +26,7 @@ function drawVisualiser(){
 
     analyser.getByteFrequencyData(dataArray)
 
-    ctx.fillStyle = '#111'
+    ctx.fillStyle = '#234'
     ctx.fillRect(0, 0, WIDTH, HEIGHT);
     
     const barWidth = (WIDTH / bufferLength) * 2.5;
@@ -80,7 +80,7 @@ startStreamBtn.addEventListener('click', () =>{
 })
 
 
-const audio = document.getElementById('stream');
+
   const streamSrc = '/stream/stream.m3u8';
 
   if (Hls.isSupported()) {
