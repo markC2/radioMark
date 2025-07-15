@@ -12,7 +12,7 @@ function  spawnFFMPEGMP3Stream(device){
 
     const ffmpeg = spawn('ffmpeg', [
         '-f', 'avFoundation',
-       `-i`, `:${device}`, //input device
+       `-i`, `:${device}`,  //input device passed via command
         '-acodec', 'libmp3lame',
         '-b:a', '128k',
         '-f', 'mp3',
