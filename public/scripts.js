@@ -33,4 +33,25 @@ startStreamBtn.addEventListener('click', () =>{
     })
 
 })
+
+
+const audio = document.getElementById('stream');
+  const streamSrc = '/stream/stream.m3u8';
+
+  if (Hls.isSupported()) {
+    const hls = new Hls();
+    hls.loadSource(streamSrc);
+    hls.attachMedia(audio);
+    hls.on(Hls.Events.MANIFEST_PARSED, () => {
+      audio.play();
+    });
+  } else if (audio.canPlayType('application/vnd.apple.mpegurl')) {
+    // Safari fallback
+    audio.src = streamSrc;
+    audio.addEventListener('loadedmetadata', () => {
+      audio.play();
+    });
+  } else {
+    console.error('❌ HLS is not supported in this browser.');
+  }
 })
