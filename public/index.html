@@ -8,6 +8,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/style.css">
+       
     </head>
     <body>
     <div class = "audiocontainer">
@@ -22,12 +23,18 @@
         </ul>
        <div class ="player">
         <audio controls autoplay>
-            <source src="/audio" type="audio/mpeg">
-        </audio>
+            <source src="/stream/stream.m3u8" type="application/vnd.apple.mpegurl">
+            Your browser does not support HLS playback.
+          </audio>
+          
        </div>
+
+       <button id="stopStreamBtn">Stop Stream</button>
+       <br>
+       <button id="startStreamBtn">Start Stream</button>
     </div>
       
         
-        
+    <script src="/scripts.js"></script>
     </body>
 </html>
